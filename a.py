@@ -1,28 +1,18 @@
-import asyncio
 import logging
 import time
 
 from aiogram import Bot, types
-from aiogram.dispatcher import Dispatcher, storage
+from aiogram.dispatcher import Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.utils import executor
-from aiogram.types import ReplyKeyboardRemove
-from aiogram.types import ReplyKeyboardMarkup
-from aiogram.types import KeyboardButton
-from aiogram.types import InlineKeyboardMarkup
-from aiogram.types import InlineKeyboardButton
-from aiogram.types import BotCommand
 from aiogram.dispatcher.filters.state import State, StatesGroup
-from aiogram.dispatcher.filters import Text
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
-from config import TOKEN
 import requests
-import pprint
 
 second = int(time.time())
+logging.basicConfig(level=logging.INFO)
 
-
-bot = Bot(token=TOKEN)
+bot = Bot(token="5135730638:AAHV9pi647R8BHCtCrh0etRUHbO8G1ulq9g")
 
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
@@ -279,16 +269,6 @@ async def likes_dislikes(message: types.Message, state: FSMContext):
             keyboard.add("Назад")
             await Choices.previous()
             await message.answer("Показывать только бесплатные события?", reply_markup=keyboard)
-
-
-@dp.message_handler(commands=['help'])
-async def process_help_command(message: types.Message):
-    await message.reply("Write something")
-
-
-@dp.message_handler()
-async def echo_message(msg: types.Message):
-    await bot.send_message(msg.from_user.id, "message")
 
 
 if __name__ == '__main__':
